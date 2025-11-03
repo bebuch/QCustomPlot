@@ -8,14 +8,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 COMPONENTS Widgets PrintSupport REQUIRED)
 qt_standard_project_setup()
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-
 include(GNUInstallDirs)
 
 # Create library target
 add_library(QCustomPlot SHARED "qcustomplot.h" "qcustomplot.cpp")
 target_include_directories(QCustomPlot INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 target_link_libraries(QCustomPlot PUBLIC Qt6::Widgets Qt6::PrintSupport)
+target_compile_definitions(QCustomPlot PRIVATE QCUSTOMPLOT_COMPILE_LIBRARY)
+target_compile_definitions(QCustomPlot INTERFACE $<INSTALL_INTERFACE:QCUSTOMPLOT_USE_LIBRARY>)
 
 # Install
 install(FILES "qcustomplot.h"
